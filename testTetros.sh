@@ -1,25 +1,20 @@
 #!/bin/bash
 
-path="../../Fillit/fillit"
+path="./fillit"
 
 echo Tetrominos non valide
-echo *********************
-for file in ./TetroNotValid/*; 
+for file in ./TetroNotValid/Tetro*; 
 do
-	$path $file | diff <(echo "error") -;	
+	if [ $($path $file) = "error" ]
+		then echo Test passed !;
+	else
+		echo fault
+	fi
 done;
-
-echo *********************
-echo "File not valid"
-$path hello
-
-echo *********************
 count=1
-echo Tetrominos valides
-echo *********************
-for file in ./TetroValid/*; 
-	do
-   		$path $file | diff FillitValid/"$count".txt -;
-		((count++));	
+for file in ./TetroValid/Tetro*; 
+do
+	$path $file > ./YourFillit/$count
+	diff ./YourFillit/$count ./FillitValid/$count.txt
+	count=$((count++))
 done;
-echo *********************
